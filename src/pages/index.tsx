@@ -67,7 +67,7 @@ export default function Home(props: HomeProps) {
     </div>
   )
 }
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const [guessCountResponse, poolCountResponse, userCountResponse] = await Promise.all([
     api.get('/guesses/count'),
     api.get('/pools/count'),
@@ -78,6 +78,7 @@ export const getServerSideProps = async () => {
       guessCount: guessCountResponse.data.count,
       poolCount: poolCountResponse.data.count,
       userCount: userCountResponse.data.count,
-    }
+    },
+    revalidate: 3600,
   }
 }
